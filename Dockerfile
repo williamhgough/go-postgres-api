@@ -11,19 +11,17 @@ RUN xz -d -c /usr/local/upx-3.94-amd64_linux.tar.xz | \
 # install dep
 RUN go get github.com/golang/dep/cmd/dep
 # create a working directory
-WORKDIR /go/src/github.com/williamhgough/pql-api
+WORKDIR /go/src/github.com/williamhgough/go-postgres-api
+# add source code
+COPY . /go/src/github.com/williamhgough/go-postgres-api
 # add Gopkg.toml and Gopkg.lock
 ADD Gopkg.toml Gopkg.toml
 ADD Gopkg.lock Gopkg.lock
 # install packages
-# --vendor-only is used to restrict dep from scanning source code
-# and finding dependencies
-RUN dep ensure --vendor-only
-# add source code
-ADD . /go/src/github.com/williamhgough/pql-api
+RUN dep ensure
 
 # create a working directory
-WORKDIR /go/src/github.com/williamhgough/pql-api/cmd
+WORKDIR /go/src/github.com/williamhgough/go-postgres-api/cmd
 # build the source
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main main.go
 # strip and compress the binary
@@ -35,8 +33,9 @@ FROM alpine:3.7
 # add ca-certificates in case you need them
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 # set working directory
-WORKDIR /go/src/github.com/williamhgough/pql-api
+WORKDIR /root
 # copy the binary from builder
-COPY --from=builder /go/src/github.com/williamhgough/pql-api/cmd/main .
+COPY --from=builder /go/src/github.com/williamhgough/go-postgres-api/cmd/main .
+COPY --from=builder /go/src/github.com/williamhgough/go-postgres-api/.env .
 # run the binary
 CMD ["./main"]

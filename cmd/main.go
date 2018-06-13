@@ -8,7 +8,7 @@ import (
 	"github.com/phyber/negroni-gzip/gzip"
 	"github.com/tylerb/graceful"
 	"github.com/urfave/negroni"
-	"github.com/williamhgough/pql-api/controllers"
+	"github.com/williamhgough/go-postgres-api/controllers"
 )
 
 func main() {

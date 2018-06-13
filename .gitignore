@@ -3,4 +3,4 @@
 /.idea
 .env
 /node_modules
-./cmd/temp/
+/cmd/temp/

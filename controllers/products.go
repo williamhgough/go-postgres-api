@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/williamhgough/pql-api/models"
-	"github.com/williamhgough/pql-api/utils"
+	"github.com/williamhgough/go-postgres-api/models"
+	"github.com/williamhgough/go-postgres-api/utils"
 )
 
 // Index Handles base products route

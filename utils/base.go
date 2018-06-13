@@ -8,13 +8,13 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // need this to use db
 	"github.com/subosito/gotenv"
-	"github.com/williamhgough/pql-api/models"
+	"github.com/williamhgough/go-postgres-api/models"
 )
 
 var db *gorm.DB
 
 func init() {
-	err := gotenv.Load("../.env")
+	err := gotenv.Load()
 	if err != nil {
 		log.Fatal(err)
 	}

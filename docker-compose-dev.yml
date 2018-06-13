@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     volumes:
-      - .:/go/src/github.com/williamhgough/pql-api
+      - .:/go/src/github.com/williamhgough/go-postgres-api
     ports:
       - 8080:8080
     depends_on:
