@@ -2,7 +2,11 @@ version: '2.1'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - .:/go/src/github.com/williamhgough/pql-api
     ports:
       - 8080:8080
     depends_on:

@@ -1,4 +1,4 @@
-FROM golang:1.8.5-jessie as builder
+FROM golang:1.10.3 as builder
 # install xz
 RUN apt-get update && apt-get install -y \
     xz-utils \
@@ -35,8 +35,8 @@ FROM alpine:3.7
 # add ca-certificates in case you need them
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 # set working directory
-WORKDIR /root
+WORKDIR /go/src/github.com/williamhgough/pql-api
 # copy the binary from builder
-COPY --from=builder /go/src/github.com/williamhgough/pql-api/main .
+COPY --from=builder /go/src/github.com/williamhgough/pql-api/cmd/main .
 # run the binary
 CMD ["./main"]
