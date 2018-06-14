@@ -30,8 +30,7 @@ GET http://localhost:8080/api/products/:id
 #### Performance test with endpoint caching:
 I've run a small load test on the initial API using [vegeta](https://github.com/tsenart/vegeta), results shown below.
 
-`echo 'GET http://localhost:8080/api/products' | \
-    vegeta attack -rate 100 -duration 5s | vegeta report -reporter text`
+`echo 'GET http://localhost:8080/api/products' | vegeta attack -rate 300 -duration 10s | vegeta report -reporter text`
 
 ```
 Requests      [total, rate]            3000, 300.10
