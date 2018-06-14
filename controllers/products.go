@@ -1,27 +1,39 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/williamhgough/go-postgres-api/models"
-	"github.com/williamhgough/go-postgres-api/utils"
+	"github.com/williamhgough/go-postgres-api/utils/cache"
+	"github.com/williamhgough/go-postgres-api/utils/database"
+	"github.com/williamhgough/go-postgres-api/utils/respond"
 )
 
 // Index Handles listing and creating products
 func Index(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		products, err := models.GetProducts(utils.GetDB())
-		if err != nil {
-			utils.RespondErr(w, r, http.StatusNoContent, err)
-		}
+		if data, err := cache.Fetch(r); err == nil {
+			respond.Call(w, r, http.StatusOK, data)
+		} else {
+			p, err := models.GetProducts(database.GetDB())
+			if err != nil {
+				respond.Error(w, r, http.StatusNoContent, err)
+			}
 
-		utils.Respond(w, r, http.StatusOK, products)
+			err = cache.Store(r, p)
+			if err != nil {
+				log.Print("couldn't set product in cache: ", err)
+			}
+
+			respond.Call(w, r, http.StatusOK, p)
+		}
 	case "POST":
-		utils.RespondErr(w, r, http.StatusInternalServerError, "not implemented yet")
+		respond.Error(w, r, http.StatusInternalServerError, "not implemented yet")
 	default:
-		utils.RespondErr(w, r, http.StatusBadRequest, "invalid request method")
+		respond.Error(w, r, http.StatusBadRequest, "invalid request method")
 	}
 }
 
@@ -30,17 +42,27 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func Product(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		vars := mux.Vars(r)
-		product, err := models.GetProduct(vars["id"], utils.GetDB())
-		if err != nil {
-			utils.RespondErr(w, r, http.StatusNoContent, err)
+		if data, err := cache.Fetch(r); err == nil {
+			respond.Call(w, r, http.StatusOK, data)
+		} else {
+			vars := mux.Vars(r)
+			p, err := models.GetProduct(vars["id"], database.GetDB())
+			if err != nil {
+				respond.Error(w, r, http.StatusNoContent, err)
+			}
+
+			err = cache.Store(r, p)
+			if err != nil {
+				log.Print("couldn't set product in cache: ", err)
+			}
+
+			respond.Call(w, r, http.StatusOK, p)
 		}
-		utils.Respond(w, r, http.StatusOK, product)
 	case "PUT":
-		utils.RespondErr(w, r, http.StatusInternalServerError, "not implemented yet")
+		respond.Error(w, r, http.StatusInternalServerError, "not implemented yet")
 	case "DELETE":
-		utils.RespondErr(w, r, http.StatusInternalServerError, "not implemented yet")
+		respond.Error(w, r, http.StatusInternalServerError, "not implemented yet")
 	default:
-		utils.RespondErr(w, r, http.StatusBadRequest, "invalid request method")
+		respond.Error(w, r, http.StatusBadRequest, "invalid request method")
 	}
 }

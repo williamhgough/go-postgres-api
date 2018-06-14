@@ -1,4 +1,4 @@
-package utils
+package database
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ var db *gorm.DB
 
 func init() {
 	// Need to allow time for postgres to migrate and seed DB before running.
-	time.Sleep(4 * time.Second)
+	time.Sleep(10 * time.Second)
 
 	username := os.Getenv("POSTGRES_USER")
 	password := os.Getenv("POSTGRES_PASSWORD")
