@@ -21,6 +21,7 @@ func encodeBody(w http.ResponseWriter, r *http.Request, v interface{}) error {
 // e.g utils.Respond(w, r, http.StatusOk, products)
 func Respond(w http.ResponseWriter, r *http.Request, status int, data interface{}) {
 	w.WriteHeader(status)
+
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Expose-Headers", "Location")
 	if data != nil {

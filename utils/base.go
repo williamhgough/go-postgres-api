@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // need this to use db
@@ -12,6 +13,9 @@ import (
 var db *gorm.DB
 
 func init() {
+	// Need to allow time for postgres to migrate and seed DB before running.
+	time.Sleep(4 * time.Second)
+
 	username := os.Getenv("POSTGRES_USER")
 	password := os.Getenv("POSTGRES_PASSWORD")
 	dbName := os.Getenv("POSTGRES_DB")
@@ -37,15 +41,21 @@ func GetDB() *gorm.DB {
 
 // Seed the database with two Initial Products
 func Seed() {
-	GetDB().Create(&models.Product{
-		Name:  "Socks",
-		Price: 5,
-		Stock: 98,
-		Code:  "001",
-	}).Create(&models.Product{
-		Name:  "Shirt",
-		Price: 49,
-		Stock: 13,
-		Code:  "002",
-	})
+	// discarding error as we only want to check
+	// []*Products length
+	products, _ := models.GetProducts(db)
+
+	if len(products) == 0 {
+		db.Create(&models.Product{
+			Name:  "Socks",
+			Price: 5,
+			Stock: 98,
+			Code:  "001",
+		}).Create(&models.Product{
+			Name:  "Shirt",
+			Price: 49,
+			Stock: 13,
+			Code:  "002",
+		})
+	}
 }
