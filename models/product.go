@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // need this to use db
@@ -17,10 +18,20 @@ type Product struct {
 }
 
 // GetProduct returns the Product with given id.
-func GetProduct(id uint, db *gorm.DB) *Product {
+func GetProduct(idString string, db *gorm.DB) (*Product, error) {
+	id, err := strconv.ParseUint(idString, 0, 64)
+	if err != nil {
+		return nil, err
+	}
+
 	p := &Product{}
 	db.Table("products").Where("id = ?", id).First(p)
-	return p
+	// If there is no name, product has not been found.
+	if p.Name == "" {
+		return nil, errors.New("no product found with specified id")
+	}
+
+	return p, nil
 }
 
 // GetProducts returns all Products.

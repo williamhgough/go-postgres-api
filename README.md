@@ -1,6 +1,8 @@
 # go-postgres-api
 Simple Golang API using docker to provide a Postgres DB & redis for endpoint caching.
 
+#### Usage:
+
 To run in development mode with hot reload:
 `make run-dev`
 

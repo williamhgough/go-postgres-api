@@ -2,9 +2,9 @@ package main
 
 import (
 	"log"
-	"net/http"
 	"time"
 
+	"github.com/gorilla/mux"
 	"github.com/phyber/negroni-gzip/gzip"
 	"github.com/tylerb/graceful"
 	"github.com/urfave/negroni"
@@ -12,8 +12,11 @@ import (
 )
 
 func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/api/products", controllers.Index)
+	mux := mux.NewRouter()
+	mux.HandleFunc("/api/products", controllers.Index).
+		Methods("GET", "POST")
+	mux.HandleFunc("/api/products/{id:[0-9]+}", controllers.Product).
+		Methods("GET", "PUT", "DELETE")
 
 	n := negroni.Classic()
 	n.Use(gzip.Gzip(gzip.DefaultCompression))
