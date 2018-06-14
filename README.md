@@ -21,7 +21,7 @@ GET http://localhost:8080/api/products/:id
 
 #### TODO:
 - [ ] Add more logging
-- [ ] Implement redis endpoint caching
+- [x] Implement redis endpoint caching
 - [ ] Use `sync.Pool` for db conns
 - [ ] Finish Product CRUD utility
 - [ ] Add unit tests
