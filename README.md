@@ -14,6 +14,7 @@ To run a production build:
 - Docker Compose
 
 #### TODO:
+- [ ] Add more logging
 - [ ] Implement redis endpoint caching
 - [ ] Use `sync.Pool` for db conns
 - [ ] Finish Product CRUD utility
