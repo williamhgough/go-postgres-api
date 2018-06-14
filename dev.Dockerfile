@@ -19,6 +19,5 @@ ADD Gopkg.lock Gopkg.lock
 RUN dep ensure
 
 WORKDIR /go/src/github.com/williamhgough/go-postgres-api/cmd
-ADD .env .env
 # Now tell Docker what command to run when the container starts
 CMD ["fresh", "main.go"]

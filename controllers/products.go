@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/williamhgough/go-postgres-api/models"
@@ -15,6 +14,5 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		utils.RespondErr(w, r, http.StatusNoContent, err)
 	}
 
-	log.Println("Successful request")
 	utils.Respond(w, r, http.StatusOK, products)
 }

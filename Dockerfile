@@ -36,6 +36,5 @@ RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 WORKDIR /root
 # copy the binary from builder
 COPY --from=builder /go/src/github.com/williamhgough/go-postgres-api/cmd/main .
-COPY --from=builder /go/src/github.com/williamhgough/go-postgres-api/.env .
 # run the binary
 CMD ["./main"]

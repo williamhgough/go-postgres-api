@@ -33,12 +33,6 @@
   revision = "ef6356a5d02936b65ca8e60b604ed6b078aac8d3"
 
 [[projects]]
-  name = "github.com/subosito/gotenv"
-  packages = ["."]
-  revision = "69b5b6104433beb2cb9c3ce00bdadf3c7c2d3f34"
-  version = "v1.1.1"
-
-[[projects]]
   name = "github.com/tylerb/graceful"
   packages = ["."]
   revision = "4654dfbb6ad53cb5e27f37d99b02e16c1872fbbb"
@@ -53,6 +47,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "eb0505a028968853eb02798dc1a44e23872250d80c80c8178909e59542a30ef0"
+  inputs-digest = "14876a440dbcbbbb76c20fdaf2e2682481deab2b70f2e9160a030acf70909756"
   solver-name = "gps-cdcl"
   solver-version = 1

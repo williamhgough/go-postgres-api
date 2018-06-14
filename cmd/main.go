@@ -11,6 +11,11 @@ import (
 	"github.com/williamhgough/go-postgres-api/controllers"
 )
 
+func init() {
+	// Need to allow time for postgres to migrate and seed DB before running.
+	time.Sleep(3 * time.Second)
+}
+
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/api/products", controllers.Index)

@@ -9,6 +9,11 @@ services:
       - .:/go/src/github.com/williamhgough/go-postgres-api
     ports:
       - 8080:8080
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: dev
+      POSTGRES_USER: postgres-dev
+      POSTGRES_PASSWORD: s3cr3tp4ssw0rd
     depends_on:
       - db
       - redis

@@ -3,7 +3,6 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -14,7 +13,6 @@ func decodeBody(r *http.Request, v interface{}) error {
 
 func encodeBody(w http.ResponseWriter, r *http.Request, v interface{}) error {
 	w.Header().Add("Content-Type", "application/json")
-	log.Printf("encode hit")
 	return json.NewEncoder(w).Encode(v)
 }
 
@@ -22,7 +20,6 @@ func encodeBody(w http.ResponseWriter, r *http.Request, v interface{}) error {
 // to encode and return data.
 // e.g utils.Respond(w, r, http.StatusOk, products)
 func Respond(w http.ResponseWriter, r *http.Request, status int, data interface{}) {
-	log.Printf("Respond hit")
 	w.WriteHeader(status)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Expose-Headers", "Location")

@@ -2,23 +2,16 @@ package utils
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // need this to use db
-	"github.com/subosito/gotenv"
 	"github.com/williamhgough/go-postgres-api/models"
 )
 
 var db *gorm.DB
 
 func init() {
-	err := gotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	username := os.Getenv("POSTGRES_USER")
 	password := os.Getenv("POSTGRES_PASSWORD")
 	dbName := os.Getenv("POSTGRES_DB")
