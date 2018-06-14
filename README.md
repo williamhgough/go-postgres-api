@@ -13,6 +13,12 @@ To run a production build:
 - Docker
 - Docker Compose
 
+#### Working Routes:
+```
+GET http://localhost:8080/api/products
+GET http://localhost:8080/api/products/:id
+```
+
 #### TODO:
 - [ ] Add more logging
 - [ ] Implement redis endpoint caching
