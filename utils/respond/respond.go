@@ -19,10 +19,10 @@ func encodeBody(w http.ResponseWriter, r *http.Request, v interface{}) error {
 // to encode and return data.
 // e.g respond.Call(w, r, http.StatusOk, products)
 func Call(w http.ResponseWriter, r *http.Request, status int, data interface{}) {
-	w.WriteHeader(status)
-	w.Header().Add("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Expose-Headers", "Location")
+	w.WriteHeader(status)
 	if data != nil {
 		encodeBody(w, r, data)
 	}
